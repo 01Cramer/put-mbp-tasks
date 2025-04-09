@@ -18,7 +18,7 @@ struct Node
 
 struct Stack
 {
-	std::atomic<std::pair<Node*, int>> top;
+    std::atomic<std::pair<Node*, int>> top;
 
     Stack() : top(std::make_pair(nullptr, 0)) {}
 
