@@ -88,7 +88,8 @@ int main() {
 
         // Perform ABA: pop nodeA then push it back.
         Node* popped = stack.pop();
-        if (popped) {
+        if (popped) 
+	{
             std::cout << "Thread 2: Popped node " << popped->data << "\n";
         }
 
@@ -100,7 +101,8 @@ int main() {
     t1.join();
     t2.join();
     Node* remaining = stack.pop();
-    if (remaining) {
+    if (remaining) 
+    {
         delete remaining;
     }
     return 0;
