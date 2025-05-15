@@ -90,7 +90,7 @@ int main()
         // Perform ABA: pop nodeA then push it back.
         Node* popped = stack.pop();
         if (popped) 
-	{
+		{
             std::cout << "Thread 2: Popped node " << popped->data << "\n";
         }
 
