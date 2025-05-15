@@ -22,35 +22,33 @@ struct Stack
 
     Stack() : top(std::make_pair(nullptr, 0)) {}
 
-	void push(Node* newNode)
-	{
+    void push(Node* newNode)
+    {
 		std::pair<Node*, int> old;
-		do
-		{
-			old = top.load(std::memory_order_relaxed);
-			newNode->next.store(old.first, std::memory_order_relaxed);
-		} while (!top.compare_exchange_strong
-			(old, std::make_pair(newNode, old.second), std::memory_order_release, std::memory_order_relaxed));
-	}
+	  	do
+	  	{
+	    	old = top.load(std::memory_order_relaxed);
+	      	newNode->next.store(old.first, std::memory_order_relaxed);
+	  	} while (!top.compare_exchange_strong
+	      	(old, std::make_pair(newNode, old.second), std::memory_order_release, std::memory_order_relaxed));
+    }
 
-	Node* pop()
-	{
-		std::pair<Node*, int> old;
-		Node* new_;
-		do
-		{
-			old = top.load(std::memory_order_relaxed);
-			if (old.first == nullptr)
-			{
-				return nullptr;
-			}
-			new_ = old.first->next.load(std::memory_order_relaxed);
-		} while (!top.compare_exchange_strong
-			(old, std::make_pair(new_, old.second + 1), std::memory_order_release, std::memory_order_relaxed));
-
-		return old.first;
-	}
-
+    Node* pop()
+    {
+         std::pair<Node*, int> old;
+         Node* new_;
+         do 
+		 {
+	     	  old = top.load(std::memory_order_relaxed);
+			  if (old.first == nullptr)
+			  {
+			      return nullptr;
+			  }
+	     	  new_ = old.first->next.load(std::memory_order_relaxed);
+	     } while (!top.compare_exchange_strong
+	         (old, std::make_pair(new_, old.second + 1), std::memory_order_release, std::memory_order_relaxed));
+          return old.first;
+    }
 };
 
 int main() 
@@ -90,7 +88,7 @@ int main()
         // Perform ABA: pop nodeA then push it back.
         Node* popped = stack.pop();
         if (popped) 
-	{
+	    {
             std::cout << "Thread 2: Popped node " << popped->data << "\n";
         }
 
