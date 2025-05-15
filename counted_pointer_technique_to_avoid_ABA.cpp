@@ -53,7 +53,8 @@ struct Stack
 
 };
 
-int main() {
+int main() 
+{
     Stack stack;
 
     Node* nodeA = new Node(100);
